@@ -56,9 +56,8 @@ message ExecuteResponse {
     string outputSignature = 5;
     // The possible statuses of the response after the execution is terminated. 
     enum Status {
-        UNKNOWN = 0;
+        FAILURE = 0;
         SUCCESS = 1;
-        FAILURE = 2;
     }
     // The status of the execution.
     Status status = 6;
