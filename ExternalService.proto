@@ -2,14 +2,24 @@ syntax = "proto3";
 
 package integration.framework.openlaw;
 
-// The External Service interface called by OpenLaw Integrator Framework.
+// ExternalService definition parsed by the Protoc Compiler. It must be extended by the server implementation
+// so it can responds to gRPC requests from OpenLaw Integration Framework.
 service ExternalService {
-    // Gets the ethereum public address from the service which is 
-    // used to verify signatures from the service. 
+    
+    // Gets the Ethereum Public Address from the service which is 
+    // used to verify events sent from the service to OpenLaw VM.
     rpc GetEthereumAddress (Empty) returns (EthereumAddressResponse) { }
 
-    // Gets the server Markup Interface definition to be used
-    // by OpenLaw template editor.
+    // Gets the server Markup Interface definition which is used in a OpenLaw Agreement with ExternalCall or ExternalSignature variable types.
+    // The expected Markup Interface definition must follow the standard:
+    //  - [[Input:Structure(inputField1: <Type>; inputField2: <Type>; inputFieldN: <Type>)]] [[Output:Structure(outputField1: <Type>; outputField2: <Type>; outputFieldN: <Type>)]]
+    //  - <Type> - can be replaced by: Text, Number and Date.
+    // Basic Markup Interface for the Coin Market Cap service can be defined as a String of value:
+    //  - "[[Input:Structure(fromCurrency: Text; toCurrency: Text; amount: Number)]] [[Output:Structure(currency: Text; price: Number; lastUpdate: Text)]]"
+    // The standard Markup Interface for any e-Signature service is defined by the following String value:
+    //  - "[[Input:Structure(signerEmail: Text; contractContentBase64: Text; contractTitle: Text)]] [[Output:Structure(signerEmail: Text; signature: Text; recordLink: Text)]]"
+    // Any e-Signature service must use the exact same Markup Interface as described above,
+    // otherwise the e-Signature will not be validated by the OpenLaw VM.
     rpc GetMarkupInterface (Empty) returns (MarkupInterfaceResponse) { }
 
     // Executes the request from OpenLaw Integrator Framework 
