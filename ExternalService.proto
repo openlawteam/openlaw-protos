@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package integration.framework.openlaw;
 
-// ExternalService definition parsed by the Protoc Compiler. It must be extended by the server implementation
-// so it can responds to gRPC requests from OpenLaw Integration Framework.
+// ExternalService definition parsed by the Protoc Compiler. It must be extended by the server implementation,
+// so it can respond to gRPC requests from OpenLaw Integration Framework.
 service ExternalService {
     
     // Gets the Ethereum Public Address from the service which is 
@@ -18,13 +18,12 @@ service ExternalService {
     //  - "[[Input:Structure(fromCurrency: Text; toCurrency: Text; amount: Number)]] [[Output:Structure(currency: Text; price: Number; lastUpdate: Text)]]"
     // The standard Markup Interface for any e-Signature service is defined by the following String value:
     //  - "[[Input:Structure(signerEmail: Text; contractContentBase64: Text; contractTitle: Text)]] [[Output:Structure(signerEmail: Text; signature: Text; recordLink: Text)]]"
-    // Any e-Signature service must use the exact same Markup Interface as described above,
-    // otherwise the e-Signature will not be validated by the OpenLaw VM.
+    // Any e-Signature service must use the exact same Markup Interface as described above, otherwise the e-Signature will not be validated by the OpenLaw VM.
     rpc GetMarkupInterface (Empty) returns (MarkupInterfaceResponse) { }
 
-    // Executes the request from OpenLaw Integrator Framework 
-    // and waits for the External Service response.
+    // Executes the request from OpenLaw Integrator Framework and waits for the External Service response.
     rpc Execute (ExecuteRequest) returns (ExecuteResponse) { }
+
 }
 
 // The Ethereum Address response message.
@@ -52,7 +51,7 @@ message ExecuteRequest {
     // Integrator Framework.
     string requestId = 3;
     // The inputJson string value that matches the Input type defined 
-    // in the Markup Interface. It must be converted from string to 
+    // in the Markup Interface. It must be converted from string to
     // json value in order to access its properties.
     string inputJson = 4;
     // The ethereum public address from the External Service as 
