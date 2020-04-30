@@ -7,17 +7,4 @@
  * in the user manual at https://docs.gradle.org/6.3/userguide/multi_project_builds.html
  */
 
-rootProject.name = "external-service"
-
-plugins {
-    scala
-    `java-library`
-}
-
-repositories {
-    jcenter()
-}
-
-dependencies {
-    implementation('org.scala-lang:scala-library:2.12.9')
-}
+rootProject.name = 'external-service'

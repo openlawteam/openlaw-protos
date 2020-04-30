@@ -18,4 +18,10 @@ scala-external-service:
 	${EXTERNAL_SERVICE_SCALA_ROOT}/gradlew build
 	@echo 'Library built with success'
 
-.PHONY: scala-external-service delete-scala-external-service
+scala-build-external-service:
+	@echo 'Building scala library for ExternalService.proto'
+	${EXTERNAL_SERVICE_SCALA_ROOT}/gradlew build
+
+.PHONY: scala-external-service \
+		delete-scala-external-service \
+		scala-build-external-service
