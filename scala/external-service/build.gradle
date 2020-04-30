@@ -74,7 +74,7 @@ bintray {
         name = 'external-service'
         userOrg = user
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+        vcsUrl = 'https://github.com/openlawteam/openlaw-protos.git'
         version {
             name = 'External Service'
             desc = 'OpenLaw External Service integration library.'
