@@ -12,10 +12,15 @@ plugins {
 
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
-}
 
-group 'openlaw.io'
-version = '1.0.0'
+    // Apply the gradle publishing tooling
+    id 'com.gradle.plugin-publish' version '0.10.1'
+    id 'com.jfrog.bintray' version '1.8.4'
+    id 'maven-publish'
+}
+project.group = 'io.openlaw.protos'
+project.version = '0.0.1'
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -25,15 +30,57 @@ repositories {
     mavenCentral()
 }
 
+// Library Dependencies
 dependencies {
     // Use the Scala version defined in the scala-builder at https://github.com/openlawteam/scala-builder/blob/master/Dockerfile#L10
     implementation 'org.scala-lang:scala-library:2.12.11'
 
-    // Use Scalatest for testing the generated Scala classses
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.scalatest:scalatest_2.12:3.1.0'
-    testImplementation 'org.scalatestplus:junit-4-12_2.12:3.1.0.0'
+    // Use protobuf compiler to compile scala generated classes
+    compile 'com.github.os72:protoc-jar:3.8.0'
+    // Use the ScalaPB plugin to be able to compile the generated Scala classes because they have base types based on scalapb API
+    compile 'com.thesamet.scalapb:compilerplugin_2.12:0.9.4'
+    compile 'com.thesamet.scalapb:scalapb-runtime-grpc_2.12:0.9.4'
+    compile 'com.thesamet.scalapb:scalapb-runtime_2.12:0.9.4'
+    // Use google protobuf lib to be able to compile utility types generated from google protobuf API
+    compile 'com.google.protobuf:protobuf-java:3.10.0'
+
+    // Use Scalatest for testing the generated Scala classes
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.scalatest:scalatest_2.12:3.1.0'
+    testCompile 'org.scalatestplus:junit-4-12_2.12:3.1.0.0'
 
     // Need scala-xml at test runtime
     testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.12:1.2.0'
+}
+
+// Library publication
+publishing {
+    publications {
+        pluginPublication (MavenPublication) {
+            from        components.java
+            groupId     project.group
+            artifactId  project.name
+            version     project.version
+        }
+    }
+}
+
+// Bintray configuration
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'openlawos'
+        name = 'external-service'
+        userOrg = user
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+        version {
+            name = 'External Service'
+            desc = 'OpenLaw External Service integration library.'
+            released  = new Date()
+            vcsTag = version
+//            attributes = ['external-service': 'io.openlaw.protos:external-service:${version}']
+        }
+    }
 }
