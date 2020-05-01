@@ -36,6 +36,11 @@ package integration.framework.openlaw
   * @param servicePublicAddress
   *   The ethereum public address from the External Service as provided
   *   in the EthereumAddressResponse.
+  * @param statusCode
+  *   Optional attribute to indicate the HTTP status code that must be handled differently
+  *   by the OpenLaw Integration Framework. For instance, if a storage service attempts to read
+  *   a file and the file doesn't exist one can return 404 to indicate that operation has failed with
+  *   a specific cause, so the integration service will propagate that error to OpenLaw platform.
   */
 @SerialVersionUID(0L)
 final case class ExecuteResponse(
@@ -46,7 +51,8 @@ final case class ExecuteResponse(
     outputSignature: _root_.scala.Predef.String = "",
     status: integration.framework.openlaw.ExecuteResponse.Status = integration.framework.openlaw.ExecuteResponse.Status.FAILURE,
     message: _root_.scala.Predef.String = "",
-    servicePublicAddress: _root_.scala.Predef.String = ""
+    servicePublicAddress: _root_.scala.Predef.String = "",
+    statusCode: _root_.scala.Int = 0
     ) extends scalapb.GeneratedMessage with scalapb.Message[ExecuteResponse] with scalapb.lenses.Updatable[ExecuteResponse] {
     @transient
     private[this] var __serializedSizeCachedValue: _root_.scala.Int = 0
@@ -108,6 +114,13 @@ final case class ExecuteResponse(
           __size += _root_.com.google.protobuf.CodedOutputStream.computeStringSize(8, __value)
         }
       };
+      
+      {
+        val __value = statusCode
+        if (__value != 0) {
+          __size += _root_.com.google.protobuf.CodedOutputStream.computeUInt32Size(9, __value)
+        }
+      };
       __size
     }
     final override def serializedSize: _root_.scala.Int = {
@@ -167,6 +180,12 @@ final case class ExecuteResponse(
           _output__.writeString(8, __v)
         }
       };
+      {
+        val __v = statusCode
+        if (__v != 0) {
+          _output__.writeUInt32(9, __v)
+        }
+      };
     }
     def mergeFrom(`_input__`: _root_.com.google.protobuf.CodedInputStream): integration.framework.openlaw.ExecuteResponse = {
       var __callerId = this.callerId
@@ -177,6 +196,7 @@ final case class ExecuteResponse(
       var __status = this.status
       var __message = this.message
       var __servicePublicAddress = this.servicePublicAddress
+      var __statusCode = this.statusCode
       var _done__ = false
       while (!_done__) {
         val _tag__ = _input__.readTag()
@@ -198,6 +218,8 @@ final case class ExecuteResponse(
             __message = _input__.readString()
           case 66 =>
             __servicePublicAddress = _input__.readString()
+          case 72 =>
+            __statusCode = _input__.readUInt32()
           case tag => _input__.skipField(tag)
         }
       }
@@ -209,7 +231,8 @@ final case class ExecuteResponse(
           outputSignature = __outputSignature,
           status = __status,
           message = __message,
-          servicePublicAddress = __servicePublicAddress
+          servicePublicAddress = __servicePublicAddress,
+          statusCode = __statusCode
       )
     }
     def withCallerId(__v: _root_.scala.Predef.String): ExecuteResponse = copy(callerId = __v)
@@ -220,6 +243,7 @@ final case class ExecuteResponse(
     def withStatus(__v: integration.framework.openlaw.ExecuteResponse.Status): ExecuteResponse = copy(status = __v)
     def withMessage(__v: _root_.scala.Predef.String): ExecuteResponse = copy(message = __v)
     def withServicePublicAddress(__v: _root_.scala.Predef.String): ExecuteResponse = copy(servicePublicAddress = __v)
+    def withStatusCode(__v: _root_.scala.Int): ExecuteResponse = copy(statusCode = __v)
     def getFieldByNumber(__fieldNumber: _root_.scala.Int): _root_.scala.Any = {
       (__fieldNumber: @_root_.scala.unchecked) match {
         case 1 => {
@@ -254,6 +278,10 @@ final case class ExecuteResponse(
           val __t = servicePublicAddress
           if (__t != "") __t else null
         }
+        case 9 => {
+          val __t = statusCode
+          if (__t != 0) __t else null
+        }
       }
     }
     def getField(__field: _root_.scalapb.descriptors.FieldDescriptor): _root_.scalapb.descriptors.PValue = {
@@ -267,6 +295,7 @@ final case class ExecuteResponse(
         case 6 => _root_.scalapb.descriptors.PEnum(status.scalaValueDescriptor)
         case 7 => _root_.scalapb.descriptors.PString(message)
         case 8 => _root_.scalapb.descriptors.PString(servicePublicAddress)
+        case 9 => _root_.scalapb.descriptors.PInt(statusCode)
       }
     }
     def toProtoString: _root_.scala.Predef.String = _root_.scalapb.TextFormat.printToUnicodeString(this)
@@ -286,7 +315,8 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
       __fieldsMap.getOrElse(__fields.get(4), "").asInstanceOf[_root_.scala.Predef.String],
       integration.framework.openlaw.ExecuteResponse.Status.fromValue(__fieldsMap.getOrElse(__fields.get(5), integration.framework.openlaw.ExecuteResponse.Status.FAILURE.javaValueDescriptor).asInstanceOf[_root_.com.google.protobuf.Descriptors.EnumValueDescriptor].getNumber),
       __fieldsMap.getOrElse(__fields.get(6), "").asInstanceOf[_root_.scala.Predef.String],
-      __fieldsMap.getOrElse(__fields.get(7), "").asInstanceOf[_root_.scala.Predef.String]
+      __fieldsMap.getOrElse(__fields.get(7), "").asInstanceOf[_root_.scala.Predef.String],
+      __fieldsMap.getOrElse(__fields.get(8), 0).asInstanceOf[_root_.scala.Int]
     )
   }
   implicit def messageReads: _root_.scalapb.descriptors.Reads[integration.framework.openlaw.ExecuteResponse] = _root_.scalapb.descriptors.Reads{
@@ -300,7 +330,8 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
         __fieldsMap.get(scalaDescriptor.findFieldByNumber(5).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
         integration.framework.openlaw.ExecuteResponse.Status.fromValue(__fieldsMap.get(scalaDescriptor.findFieldByNumber(6).get).map(_.as[_root_.scalapb.descriptors.EnumValueDescriptor]).getOrElse(integration.framework.openlaw.ExecuteResponse.Status.FAILURE.scalaValueDescriptor).number),
         __fieldsMap.get(scalaDescriptor.findFieldByNumber(7).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
-        __fieldsMap.get(scalaDescriptor.findFieldByNumber(8).get).map(_.as[_root_.scala.Predef.String]).getOrElse("")
+        __fieldsMap.get(scalaDescriptor.findFieldByNumber(8).get).map(_.as[_root_.scala.Predef.String]).getOrElse(""),
+        __fieldsMap.get(scalaDescriptor.findFieldByNumber(9).get).map(_.as[_root_.scala.Int]).getOrElse(0)
       )
     case _ => throw new RuntimeException("Expected PMessage")
   }
@@ -321,7 +352,8 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
     outputSignature = "",
     status = integration.framework.openlaw.ExecuteResponse.Status.FAILURE,
     message = "",
-    servicePublicAddress = ""
+    servicePublicAddress = "",
+    statusCode = 0
   )
   /** The possible statuses of the response after the execution is 
     * terminated.
@@ -372,6 +404,7 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
     def status: _root_.scalapb.lenses.Lens[UpperPB, integration.framework.openlaw.ExecuteResponse.Status] = field(_.status)((c_, f_) => c_.copy(status = f_))
     def message: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.message)((c_, f_) => c_.copy(message = f_))
     def servicePublicAddress: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Predef.String] = field(_.servicePublicAddress)((c_, f_) => c_.copy(servicePublicAddress = f_))
+    def statusCode: _root_.scalapb.lenses.Lens[UpperPB, _root_.scala.Int] = field(_.statusCode)((c_, f_) => c_.copy(statusCode = f_))
   }
   final val CALLERID_FIELD_NUMBER = 1
   final val ACTIONID_FIELD_NUMBER = 2
@@ -381,6 +414,7 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
   final val STATUS_FIELD_NUMBER = 6
   final val MESSAGE_FIELD_NUMBER = 7
   final val SERVICEPUBLICADDRESS_FIELD_NUMBER = 8
+  final val STATUSCODE_FIELD_NUMBER = 9
   def of(
     callerId: _root_.scala.Predef.String,
     actionId: _root_.scala.Predef.String,
@@ -389,7 +423,8 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
     outputSignature: _root_.scala.Predef.String,
     status: integration.framework.openlaw.ExecuteResponse.Status,
     message: _root_.scala.Predef.String,
-    servicePublicAddress: _root_.scala.Predef.String
+    servicePublicAddress: _root_.scala.Predef.String,
+    statusCode: _root_.scala.Int
   ): _root_.integration.framework.openlaw.ExecuteResponse = _root_.integration.framework.openlaw.ExecuteResponse(
     callerId,
     actionId,
@@ -398,6 +433,7 @@ object ExecuteResponse extends scalapb.GeneratedMessageCompanion[integration.fra
     outputSignature,
     status,
     message,
-    servicePublicAddress
+    servicePublicAddress,
+    statusCode
   )
 }
