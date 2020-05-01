@@ -19,11 +19,9 @@ build-es-scala:
 	docker run -u `id -u` --rm -it -v $(PWD)/${EXTERNAL_SERVICE_SCALA_ROOT}:/home/gradle/project -w /home/gradle/project gradle gradle build
 	@echo 'Library built with success'
 
-release-es-scala:
+publish-es-scala:
 	@echo 'Releasing scala external-service scala library...'
-	./${EXTERNAL_SERVICE_SCALA_ROOT}/gradlew -p ${EXTERNAL_SERVICE_SCALA_ROOT} bintrayUpload
+	docker run -u `id -u` --rm -it -v $(PWD)/${EXTERNAL_SERVICE_SCALA_ROOT}:/home/gradle/project -w /home/gradle/project gradle gradle publish
 	@echo 'Library released with success'
 
-.PHONY: clean-es-scala \
-		build-es-scala \
-		release-es-scala
+.PHONY: clean-es-scala build-es-scala publish-es-scala

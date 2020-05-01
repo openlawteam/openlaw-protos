@@ -96,6 +96,12 @@ message ExecuteResponse {
     // The ethereum public address from the External Service as provided
     // in the EthereumAddressResponse.
     string servicePublicAddress = 8;
+
+    // Optional attribute to indicate the HTTP status code that must be handled differently
+    // by the OpenLaw Integration Framework. For instance, if a storage service attempts to read
+    // a file and the file doesn't exist one can return 404 to indicate that operation has failed with
+    // a specific cause, so the integration service will propagate that error to OpenLaw platform.
+    uint32 statusCode = 9;
 }
 
 // The Empty request message to indicate no data in the request.
