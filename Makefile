@@ -28,10 +28,11 @@ build-es-scala:
 	@echo 'Library built with success'
 
 publish-es-scala:
-	@echo 'Releasing scala external-service scala library...'
+	@echo 'Publishing scala external-service scala library to GitHub...'
 	docker run -u `id -u` --rm -it \
+			-e 'USERNAME=${USERNAME}' -e 'GITHUB_TOKEN=${GITHUB_TOKEN}' \
 	 		-v $(PWD)/${EXTERNAL_SERVICE_SCALA_ROOT}:/home/gradle/project \
 	 		-w /home/gradle/project gradle gradle publish
-	@echo 'Library released with success'
+	@echo 'Library published with success'
 
 .PHONY: clean-es-scala build-es-scala publish-es-scala
