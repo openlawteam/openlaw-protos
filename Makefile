@@ -24,15 +24,15 @@ build-es-scala:
 	@echo 'Building library...'
 	docker run -u `id -u` --rm -it \
 			-v $(PWD)/${EXTERNAL_SERVICE_SCALA_ROOT}:/home/gradle/project \
-			-w /home/gradle/project gradle gradle build
+			-w /home/gradle/project gradle:6.4.1 gradle build
 	@echo 'Library built with success'
 
 publish-es-scala:
-	@echo 'Publishing scala external-service scala library to GitHub...'
+	@echo 'Publishing scala external-service scala library to Bintray...'
 	docker run -u `id -u` --rm -it \
-			-e 'USERNAME=${USERNAME}' -e 'GITHUB_TOKEN=${GITHUB_TOKEN}' \
+			-e 'BINTRAY_USER=${BINTRAY_USER}' -e 'BINTRAY_KEY=${BINTRAY_KEY}' \
 	 		-v $(PWD)/${EXTERNAL_SERVICE_SCALA_ROOT}:/home/gradle/project \
-	 		-w /home/gradle/project gradle gradle publish
+	 		-w /home/gradle/project gradle:6.4.1 gradle bintrayUpload --info
 	@echo 'Library published with success'
 
 .PHONY: clean-es-scala build-es-scala publish-es-scala
