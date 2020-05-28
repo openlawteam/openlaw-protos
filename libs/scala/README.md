@@ -16,6 +16,16 @@
     - [ExternalService](#integration.framework.openlaw.ExternalService)
   
 
+- [HealthCheck.proto](#HealthCheck.proto)
+    - [HealthCheckRequest](#grpc.health.v1.HealthCheckRequest)
+    - [HealthCheckResponse](#grpc.health.v1.HealthCheckResponse)
+  
+    - [HealthCheckResponse.ServingStatus](#grpc.health.v1.HealthCheckResponse.ServingStatus)
+  
+  
+    - [Health](#grpc.health.v1.Health)
+  
+
 - [Scalar Value Types](#scalar-value-types)
 
 
@@ -139,6 +149,75 @@ so it can respond to gRPC requests from OpenLaw Integration Framework.
 | GetEthereumAddress | [Empty](#integration.framework.openlaw.Empty) | [EthereumAddressResponse](#integration.framework.openlaw.EthereumAddressResponse) | Gets the Ethereum Public Address from the service which is used to verify events sent from the service to OpenLaw VM. |
 | GetMarkupInterface | [Empty](#integration.framework.openlaw.Empty) | [MarkupInterfaceResponse](#integration.framework.openlaw.MarkupInterfaceResponse) | Gets the server Markup Interface definition which is used in a OpenLaw Agreement with ExternalCall or ExternalSignature variable types. The expected Markup Interface definition must follow the standard: - [[Input:Structure(inputField1: &lt;Type&gt;; inputField2: &lt;Type&gt;; inputFieldN: &lt;Type&gt;)]] [[Output:Structure(outputField1: &lt;Type&gt;; outputField2: &lt;Type&gt;; outputFieldN: &lt;Type&gt;)]] - &lt;Type&gt; - can be replaced by: Text, Number and Date. Basic Markup Interface for the Coin Market Cap service can be defined as a String of value: - &#34;[[Input:Structure(fromCurrency: Text; toCurrency: Text; amount: Number)]] [[Output:Structure(currency: Text; price: Number; lastUpdate: Text)]]&#34; The standard Markup Interface for any e-Signature service is defined by the following String value: - &#34;[[Input:Structure(signerEmail: Text; contractContentBase64: Text; contractTitle: Text)]] [[Output:Structure(signerEmail: Text; signature: Text; recordLink: Text)]]&#34; Any e-Signature service must use the exact same Markup Interface as described above, otherwise the e-Signature will not be validated by the OpenLaw VM. |
 | Execute | [ExecuteRequest](#integration.framework.openlaw.ExecuteRequest) | [ExecuteResponse](#integration.framework.openlaw.ExecuteResponse) | Executes the request from OpenLaw Integrator Framework and waits for the External Service response. |
+
+ 
+
+
+
+<a name="HealthCheck.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## HealthCheck.proto
+
+
+
+<a name="grpc.health.v1.HealthCheckRequest"></a>
+
+### HealthCheckRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| service | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="grpc.health.v1.HealthCheckResponse"></a>
+
+### HealthCheckResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| status | [HealthCheckResponse.ServingStatus](#grpc.health.v1.HealthCheckResponse.ServingStatus) |  |  |
+
+
+
+
+
+ 
+
+
+<a name="grpc.health.v1.HealthCheckResponse.ServingStatus"></a>
+
+### HealthCheckResponse.ServingStatus
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| UNKNOWN | 0 |  |
+| SERVING | 1 |  |
+| NOT_SERVING | 2 |  |
+
+
+ 
+
+ 
+
+
+<a name="grpc.health.v1.Health"></a>
+
+### Health
+
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| Check | [HealthCheckRequest](#grpc.health.v1.HealthCheckRequest) | [HealthCheckResponse](#grpc.health.v1.HealthCheckResponse) |  |
 
  
 

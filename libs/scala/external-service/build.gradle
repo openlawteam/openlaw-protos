@@ -12,7 +12,7 @@ plugins {
 
 def scalaVersion = "2.12"
 def group = "org.openlaw.protos"
-project.version = "0.0.2"
+project.version = "0.0.3"
 project.group = group
 
 repositories {

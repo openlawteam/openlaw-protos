@@ -14,11 +14,12 @@ clean-es-scala:
 	@echo 'Scala files deleted with success'
 
 build-es-scala:
-	@echo 'Generating scala classes from ExternalService.proto...'
+	@echo 'Generating scala classes from...'
+	@ls | grep proto
 	docker run -u `id -u` --rm -it -v $(PWD):/src openlaw/protocore protoc \
 			--doc_out=${SCALA_DIST} --doc_opt=markdown,README.md \
 			--scala_out=flat_package,grpc:${EXTERNAL_SERVICE_SCALA_OUTPUT} \
-			ExternalService.proto
+			*.proto
 	@ls '${EXTERNAL_SERVICE_SCALA_PATH}'
 	@echo 'Files generated with success'
 	@echo 'Building library...'
