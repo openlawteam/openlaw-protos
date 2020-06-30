@@ -26,6 +26,15 @@
     - [Health](#grpc.health.v1.Health)
   
 
+- [SignatureCallbackService.proto](#SignatureCallbackService.proto)
+    - [SignatureCallbackResponse](#integration.framework.openlaw.SignatureCallbackResponse)
+  
+    - [SignatureCallbackResponse.Status](#integration.framework.openlaw.SignatureCallbackResponse.Status)
+  
+  
+    - [SignatureCallbackService](#integration.framework.openlaw.SignatureCallbackService)
+  
+
 - [Scalar Value Types](#scalar-value-types)
 
 
@@ -218,6 +227,60 @@ so it can respond to gRPC requests from OpenLaw Integration Framework.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | Check | [HealthCheckRequest](#grpc.health.v1.HealthCheckRequest) | [HealthCheckResponse](#grpc.health.v1.HealthCheckResponse) |  |
+
+ 
+
+
+
+<a name="SignatureCallbackService.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## SignatureCallbackService.proto
+
+
+
+<a name="integration.framework.openlaw.SignatureCallbackResponse"></a>
+
+### SignatureCallbackResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| errorMessage | [string](#string) |  |  |
+| status | [SignatureCallbackResponse.Status](#integration.framework.openlaw.SignatureCallbackResponse.Status) |  |  |
+
+
+
+
+
+ 
+
+
+<a name="integration.framework.openlaw.SignatureCallbackResponse.Status"></a>
+
+### SignatureCallbackResponse.Status
+
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| FAILURE | 0 |  |
+| SUCCESS | 1 |  |
+
+
+ 
+
+ 
+
+
+<a name="integration.framework.openlaw.SignatureCallbackService"></a>
+
+### SignatureCallbackService
+
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| Callback | [ExecuteResponse](#integration.framework.openlaw.ExecuteResponse) | [SignatureCallbackResponse](#integration.framework.openlaw.SignatureCallbackResponse) |  |
 
  
 
