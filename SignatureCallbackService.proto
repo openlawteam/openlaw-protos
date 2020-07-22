@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "ExternalService.proto";
+
+package integration.framework.openlaw;
+
+message SignatureCallbackResponse {
+    enum Status {
+        FAILURE = 0;
+        SUCCESS = 1;
+    }
+
+    string errorMessage = 1;
+
+    Status status = 2;
+}
+
+
+service SignatureCallbackService {
+    rpc Callback (integration.framework.openlaw.ExecuteResponse) returns (SignatureCallbackResponse) {  }
+}
