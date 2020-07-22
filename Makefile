@@ -36,4 +36,12 @@ publish-es-scala:
 	 		-w /home/gradle/project gradle:6.4.1 gradle bintrayUpload --info
 	@echo 'Library published with success'
 
-.PHONY: clean-es-scala build-es-scala publish-es-scala
+
+publish-es-scala-local:
+	@echo 'Publishing scala external-service scala library to Local Maven repository...'
+	docker run -u `id -u` --rm -it \
+	 		-v $(PWD)/${EXTERNAL_SERVICE_SCALA_ROOT}:/home/gradle/project \
+	 		-w /home/gradle/project gradle:6.4.1 gradle publishToMavenLocal --info
+	@echo 'Library published with success'
+
+.PHONY: clean-es-scala build-es-scala publish-es-scala publish-es-scala-local

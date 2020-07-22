@@ -12,7 +12,7 @@ plugins {
 
 def scalaVersion = "2.12"
 def group = "org.openlaw.protos"
-project.version = "0.0.3"
+project.version = "0.0.4"
 project.group = group
 
 repositories {
@@ -82,6 +82,12 @@ def pomConfig = {
 // Publication tasks
 publishing {
     publications {
+        mavenJava(MavenPublication) {
+          from components.java
+          groupId group
+          artifactId project.name + "_" + scalaVersion
+          version project.version
+        }
         bintrayPublication(MavenPublication) {
             from components.java
             groupId group
@@ -97,6 +103,7 @@ publishing {
         }
     }
 }
+
 
 // Bintray setup
 bintray {
